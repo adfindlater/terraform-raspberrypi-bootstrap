@@ -22,7 +22,7 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       "sudo timedatectl set-ntp true",
 
       # CHANGE DEFAULT PASSWORD
-      # "echo 'pi:${var.new_password}' | sudo chpasswd",
+      "echo 'pi:${var.new_password}' | sudo chpasswd",
 
       # SYSTEM AND PACKAGE UPDATES
       "sudo apt-get update -y",
@@ -36,20 +36,19 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       "sudo systemctl enable prometheus-node-exporter.service",
       
       # NETWORKING - SET STATIC IP
-      # "echo 'interface eth0\nstatic ip_address=${var.static_ip_and_mask}\nstatic routers=${var.static_router}\nstatic domain_name_servers=${var.static_dns}' | cat >> /etc/dhcpcd.conf",
+      "echo 'interface eth0\nstatic ip_address=${var.static_ip_and_mask}\nstatic routers=${var.static_router}\nstatic domain_name_servers=${var.static_dns}' | cat >> /etc/dhcpcd.conf",
       
       # COPY KUBERNETES PREP SCRIPT
-      "curl https://raw.githubusercontent.com/adfindlater/terraform-raspberrypi-bootstrap/master/k8s_prep.sh > /home/${var.username}/k8s_prep.sh",
+      "curl https://raw.githubusercontent.com/clayshek/terraform-raspberrypi-bootstrap/master/k8s_prep.sh > /home/pi/k8s_prep.sh",
       "chmod u+x k8s_prep.sh",
-      # "./k8s_prep.sh",
       
       # COPY HELM & TILLER SETUP
-      # "curl https://raw.githubusercontent.com/clayshek/terraform-raspberrypi-bootstrap/master/helm/tiller-rbac-config.yml > /home/pi/helm/tiller-rbac-config.yml",
-      # "curl https://raw.githubusercontent.com/clayshek/terraform-raspberrypi-bootstrap/master/helm/install-helm-tiller.sh > /home/pi/helm/install-helm-tiller.sh",
-      # "chmod u+x helm/install-helm-tiller.sh",
+      "curl https://raw.githubusercontent.com/clayshek/terraform-raspberrypi-bootstrap/master/helm/tiller-rbac-config.yml > /home/pi/helm/tiller-rbac-config.yml",
+      "curl https://raw.githubusercontent.com/clayshek/terraform-raspberrypi-bootstrap/master/helm/install-helm-tiller.sh > /home/pi/helm/install-helm-tiller.sh",
+      "chmod u+x helm/install-helm-tiller.sh",
 
       # OPTIMIZE GPU MEMORY
-      # "echo 'gpu_mem=16' | sudo tee -a /boot/config.txt",
+      "echo 'gpu_mem=16' | sudo tee -a /boot/config.txt",
 
       # REBOOT
       # Changed from 'sudo reboot' to 'sudo shutdown -r +0' to address exit status issue encountered
