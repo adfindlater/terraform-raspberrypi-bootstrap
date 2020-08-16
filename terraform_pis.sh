@@ -9,10 +9,11 @@ do
     node_name="${node_name_list[$counter]}"
 
     echo "Terraforming $node_addr -> $node_name"...
-    terraform apply -var \
-	      "raspberrypi_ip=$node_addr" \
-	      "new_hostname=$node_name" \
-	      -state="${node_name}.tfstate"
+    terraform apply \
+	      -var "raspberrypi_ip=$node_addr" \
+	      -var "new_hostname=$node_name" \
+	      -state="${node_name}.tfstate" \
+	      -auto-approve
     counter=$((counter+1))
 done
 
