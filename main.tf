@@ -22,7 +22,7 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       "sudo timedatectl set-ntp true",
 
       # CHANGE DEFAULT PASSWORD
-      # "echo '$user:${var.new_password}' | sudo chpasswd",
+      "echo '$user:${var.new_password}' | sudo chpasswd",
 
       # SYSTEM AND PACKAGE UPDATES
       "sudo apt-get update -y",

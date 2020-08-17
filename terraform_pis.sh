@@ -1,5 +1,5 @@
 #!/bin/bash
-node_addr_list=("192.168.1.121" "192.168.1.122")
+node_addr_list=("192.168.1.123" "192.168.1.124")
 node_name_list=("pi-k8s-control-plane" "pi-k8s-worker-01")
 
 counter=0
