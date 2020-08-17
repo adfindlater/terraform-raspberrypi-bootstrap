@@ -6,7 +6,7 @@
 # CONNECTION PARAMETERS
 # raspberrypi_ip = "192.168.1.121"
 username = "ubuntu"
-password = "gvvPT248430"
+password = ""
 
 # CONIGURATION PARAMETERS
 # new_hostname = "pi-k8s-worker-01"
