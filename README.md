@@ -6,7 +6,7 @@
    used by the pis, as well as the timezone.
 2. update the `terraform_pis.sh` script with a single IP address for the control plane node and
    one or more worker node IP addresses.
-3. Run this script to provision the nodes and create a k8s cluster.
+3. Run `terraform_pis.sh` to provision the nodes and create a k8s cluster.
 
 e.g.
 ```
