@@ -1,0 +1,6 @@
+{
+  "registry.terraform.io/hashicorp/null": {
+    "hash": "h1:CFnENdqQu4g3LJNevA32aDxcUz2qGkRGQpFfkI8TCdE=",
+    "version": "2.1.2"
+  }
+}
