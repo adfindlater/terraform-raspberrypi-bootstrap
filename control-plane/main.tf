@@ -37,7 +37,7 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       "sudo systemctl enable prometheus-node-exporter.service",
             
       # COPY KUBERNETES PREP SCRIPT
-      "curl https://raw.githubusercontent.com/adfindlater/terraform-raspberrypi-bootstrap/pi8s/control_plane_init.sh > /home/${var.username}/control_plane_init.sh",
+      "curl https://raw.githubusercontent.com/adfindlater/terraform-raspberrypi-bootstrap/pi8s/control-plane/control_plane_init.sh > /home/${var.username}/control_plane_init.sh",
       "chmod u+x control_plane_init.sh",
       "./control_plane_init.sh",
 
