@@ -6,6 +6,11 @@ Add one control plane and one or more worker node IP addresses to the `terraform
 
 e.g.
 ```
+#!/bin/bash
+
+# Provide an IP address for the k8s control-plane node as well as a list
+# of worker node IPs to provision.
+
 control_plane_ip="192.168.1.123"
 worker_ips=("192.168.1.124" "192.168.1.125")
 ```
