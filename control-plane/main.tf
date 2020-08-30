@@ -10,7 +10,12 @@ resource "null_resource" "raspberry_pi_bootstrap" {
     password = "${var.password}"
     host = "${var.raspberrypi_ip}"
   }
-
+  
+  provisioner "file" {
+    source      = "control_plane_init.sh"
+    destination = "/tmp/control_plane_init.sh"
+  }
+  
   provisioner "remote-exec" {
     inline = [
       # SET HOSTNAME
@@ -21,37 +26,30 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       "sudo timedatectl set-timezone ${var.timezone}",
       "sudo timedatectl set-ntp true",
 
-      # CHANGE DEFAULT PASSWORD
-      # "echo 'ubuntu:${var.new_password}' | sudo chpasswd",
-
       # SYSTEM AND PACKAGE UPDATES
       "sudo apt-get update -y",
       "sudo apt-get upgrade -y",
       "sudo apt-get dist-upgrade -y",
       "sudo apt --fix-broken install -y",
 
+      "sudo apt-get install sshpass -y",
       # INSTALL PROMETHEUS NODE EXPORTER
       # This step optional, comment out this section if not desired
       "sudo apt-get install prometheus-node-exporter -y",
       "sudo systemctl enable prometheus-node-exporter.service",
             
       # COPY KUBERNETES PREP SCRIPT
-      "curl https://raw.githubusercontent.com/adfindlater/terraform-raspberrypi-bootstrap/pi8s/control-plane/control_plane_init.sh > /home/${var.username}/control_plane_init.sh",
-      "chmod u+x control_plane_init.sh",
-      "./control_plane_init.sh",
-
-      # NETWORKING - SET STATIC IP
-      # "echo 'interface eth0\nstatic ip_address=${var.static_ip_and_mask}\nstatic routers=${var.static_router}\nstatic domain_name_servers=${var.static_dns}' | cat >> /etc/dhcpcd.conf",
-      
-      # OPTIMIZE GPU MEMORY
-      # "echo 'gpu_mem=16' | sudo tee -a /boot/config.txt",
-
-      # REBOOT
-      # Changed from 'sudo reboot' to 'sudo shutdown -r +0' to address exit status issue encountered
-      # after Terraform 0.11.3, see https://github.com/hashicorp/terraform/issues/17844
-      # "sudo shutdown -r +0"
+      "chmod u+x /tmp/control_plane_init.sh",
+      "/tmp/control_plane_init.sh",
     ]
   }
   provisioner "local-exec" {
-    command = "sshpass -p 'gvvPT248430' scp ${var.raspberrypi_ip}:/tmp/worker_join_command.txt worker_join_command.txt"
+    command = "/usr/bin/sshpass -p '${var.password}' scp -o StrictHostKeyChecking=no ubuntu@${var.raspberrypi_ip}:/tmp/worker_join_command.txt worker_join_command.txt"
+  }
+  provisioner "local-exec" {
+    command = "/usr/bin/sshpass -p '${var.password}' scp -o StrictHostKeyChecking=no ubuntu@${var.raspberrypi_ip}:/home/ubuntu/.kube/config kube_config"
+  }
+  # provisioner "remote-exec" {
+  #   inline = ["sudo shutdown -r +0"]
+  # }
 }

@@ -56,4 +56,4 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.12.0/Documentation/kube-flannel.yml | kubectl apply -f -
 
-kubeadm token create --print-join-command 2>/dev/null > worker_join_command.txt
+kubeadm token create --print-join-command 2>/dev/null > /tmp/worker_join_command.txt

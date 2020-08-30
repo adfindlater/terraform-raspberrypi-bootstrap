@@ -46,5 +46,3 @@ sudo apt-get update && sudo apt-get install -y --allow-downgrades kubeadm=1.17.4
 
 # sudo apt update && sudo apt install -y kubelet=1.17.11-00 kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
-
-
