@@ -2,15 +2,14 @@
 
 # New README
 
-Add one control plane and one or more worker node IP addresses to the `terraform_pis.sh` script.
+1. update `terraform.tfvars` with the correct username ans password
+   used by the pis, as well as the timezone.
+2. update the `terraform_pis.sh` script with a single IP address for the control plane node and
+   one or more worker node IP addresses.
+3. Run this script to provision the nodes and create a k8s cluster.
 
 e.g.
 ```
-#!/bin/bash
-
-# Provide an IP address for the k8s control-plane node as well as a list
-# of worker node IPs to provision.
-
 control_plane_ip="192.168.1.123"
 worker_ips=("192.168.1.124" "192.168.1.125")
 ```

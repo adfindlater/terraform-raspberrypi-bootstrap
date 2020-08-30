@@ -3,7 +3,7 @@
 # 1. update terraform.tfvars with the correct username ans password
 #    used by the pis, as well as the timezone.
 # 2. update this script with a single IP address for the control plane node and
-#    one or more work node IP addresses.
+#    one or more worker node IP addresses.
 # 3. Run this script to provision the nodes and create a k8s cluster.
 
 control_plane_ip="192.168.1.123"
