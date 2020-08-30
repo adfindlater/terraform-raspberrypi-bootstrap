@@ -3,7 +3,6 @@
 # Provisioners by default run only at resource creation, additional runs without cleanup may introduce problems.
 # https://www.terraform.io/docs/provisioners/index.html
 
-output "worker_join_command" {value = "$(cat worker_join_command.txt)" }
 resource "null_resource" "raspberry_pi_bootstrap" {
   connection {
     type = "ssh"
@@ -50,7 +49,15 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       # REBOOT
       # Changed from 'sudo reboot' to 'sudo shutdown -r +0' to address exit status issue encountered
       # after Terraform 0.11.3, see https://github.com/hashicorp/terraform/issues/17844
-      "sudo shutdown -r +0"
+      # "sudo shutdown -r +0"
     ]
   }
+}
+
+data "file" "worker_join_command" {
+  filename = "/tmp/worker_join_command.txt"
+}
+
+output "worker_join_command" {
+  value = "${data.local_file.worker_join_command.content}"
 }
