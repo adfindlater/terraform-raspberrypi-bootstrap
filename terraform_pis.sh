@@ -1,12 +1,18 @@
 #!/bin/bash
 
-# Provide an IP address for the k8s control-plane node as well as a list
-# of worker node IPs to provision.
+# 1. update terraform.tfvars with the correct username ans password
+#    used by the pis, as well as the timezone.
+# 2. update this script with a single IP address for the control plane node and
+#    one or more work node IP addresses.
+# 3. Run this script to provision the nodes and create a k8s cluster.
 
 control_plane_ip="192.168.1.123"
 worker_ips=("192.168.1.124")
 
 cwd=$PWD
+
+cp $cwd/terraform.tfvars $cwd/control-plane/terraform.tfvars
+cp $cwd/terraform.tfvars $cwd/worker/terraform.tfvars
 
 # Terraform control plane node
 cd $cwd/control-plane
