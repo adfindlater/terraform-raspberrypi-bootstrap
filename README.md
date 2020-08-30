@@ -1,5 +1,16 @@
 # terraform-raspberrypi-bootstrap
 
+# New README
+
+Add one control plane and one or more worker node IP addresses to the `terraform_pis.sh` script.
+
+e.g.
+```
+control_plane_ip="192.168.1.123"
+worker_ips=("192.168.1.124" "192.168.1.125")
+```
+
+# Original README
 NOTE: Though still functional, I've replaced this functionality with Ansible and a better provisioning model IMO: https://github.com/clayshek/raspi-ubuntu-ansible
 
 ## Summary
