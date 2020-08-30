@@ -52,12 +52,6 @@ resource "null_resource" "raspberry_pi_bootstrap" {
       # "sudo shutdown -r +0"
     ]
   }
-}
-
-data "file" "worker_join_command" {
-  filename = "/tmp/worker_join_command.txt"
-}
-
-output "worker_join_command" {
-  value = "${data.local_file.worker_join_command.content}"
+  provisioner "local-exec" {
+    command = "sshpass -p 'gvvPT248430' scp ${var.raspberrypi_ip}:/tmp/worker_join_command.txt worker_join_command.txt"
 }
